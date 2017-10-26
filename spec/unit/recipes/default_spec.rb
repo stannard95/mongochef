@@ -1,8 +1,4 @@
-#
-# Cookbook:: mongodb-server
-# Spec:: default
-#
-# Copyright:: 2017, The Authors, All Rights Reserved.
+
 
 require 'spec_helper'
 
@@ -18,5 +14,10 @@ describe 'mongodb-server::default' do
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
     end
+
+    it 'installs mongodb-org' do
+      expect(chef_run).to upgrade_package 'mongodb-org'
+    end
+
   end
 end
