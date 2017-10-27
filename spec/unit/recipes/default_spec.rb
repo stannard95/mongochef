@@ -19,5 +19,31 @@ describe 'mongodb-server::default' do
       expect(chef_run).to upgrade_package 'mongodb-org'
     end
 
+    it 'starts the mongod' do
+      expect(chef_run).to start_service 'mongod'
+    end
+
+    it 'enables the mongod' do
+      expect(chef_run).to enable_service 'mongod'
+    end
+
+    it 'add repo for mongo' do
+      expect(chef_run).to add_apt_repository 'mongodb-org'
+    end
+
+    it 'expect to make template service' do
+      expect(chef_run).to create_template '/etc/systemd/system/mongod.service'
+      template = chef_run.template('/etc/systemd/system/mongod.service')
+    end
+
+    it 'expect to make template conf' do
+      expect(chef_run).to create_template '/etc/mongod.conf'
+      template = chef_run.template('/etc/mongod.conf')
+    end
+
+    it 'apt update' do
+      expect(chef_run).to update_apt_update 'update'
+    end
+
   end
 end
